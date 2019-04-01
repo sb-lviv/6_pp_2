@@ -6,7 +6,11 @@ let bodyParser = require('body-parser');
 
 // logg
 app.use((req, res, next) => {
-  console.log(`${new Date()} [${req.method}] ${req.path}`);
+  let d = new Date();
+  console.log(`${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} `
+            + `[${req.method}] `
+            + `${req.path} `
+            + `(${req.headers['content-length'] || 0})`);
   next();
 });
 
