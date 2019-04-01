@@ -1,13 +1,14 @@
 let router = require('express').Router();
 
-module.exports = function() {
+module.exports = function(db) {
+  let model = db.models.user;
 
   router.get('/', (req, res, next) => {
-    res.send('user');
+    res.send(model.get());
   });
 
   router.post('/', (req, res, next) => {
-    res.send('user');
+    res.send(model.insert(req.body));
   });
 
   router.put('/', (req, res, next) => {
@@ -15,8 +16,8 @@ module.exports = function() {
   });
 
   router.delete('/', (req, res, next) => {
-    res.send('user');
+    res.send(model.remove(req.query));
   });
 
   return router;
-}
+};

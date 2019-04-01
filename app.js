@@ -3,6 +3,7 @@
 let router = require('./routes/router.js');
 let app = require('express')();
 let bodyParser = require('body-parser');
+let db = require('./classes/db.js');
 
 // logg
 app.use((req, res, next) => {
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(router());
+app.use(router(db()));
 
 app.all('*', (req, res, next) => {
   res.status(404).send('404');
