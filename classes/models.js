@@ -1,5 +1,6 @@
-let user = require('./user.js');
 let ObjectID = require('mongodb').ObjectID;
+let user = require('./user.js');
+let post = require('./post.js');
 
 const proto = {
   collection: null,
@@ -34,5 +35,6 @@ const proto = {
 module.exports = function({db}) {
   return {
     user: user({db, proto}),
+    post: post({db, proto}),
   }
 };
