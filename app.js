@@ -6,19 +6,21 @@ let bodyParser = require('body-parser');
 let mongodb = require('mongodb');
 let models = require('./classes/models.js');
 
-// log
-app.use((req, res, next) => {
-  let d = new Date();
-  console.log(`${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} `
-            + `[${req.method}] `
-            + `${req.path} `
-            + `(${req.headers['content-length'] || 0})`);
-  next();
-});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// log
+app.use((req, res, next) => {
+  let d = new Date();
+  console.log(`${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} `
+            + `(${req.headers['content-length'] || 0}) `
+            + `[${req.method}] `
+            + `${req.path} `
+            + `?${JSON.stringify(req.query)}`
+            + ` | ${JSON.stringify(req.body)}`);
+  next();
+});
 
 (async function() {
   let client = await mongodb.MongoClient.connect(

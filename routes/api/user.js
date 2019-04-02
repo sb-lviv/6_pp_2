@@ -4,7 +4,7 @@ module.exports = function({models}) {
   let model = models.user;
 
   router.get('/', async (req, res, next) => {
-    res.send(await model.get());
+    res.send(await model.find(req.query));
   });
 
   router.post('/', async (req, res, next) => {

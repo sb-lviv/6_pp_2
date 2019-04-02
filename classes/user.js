@@ -1,29 +1,27 @@
+let ObjectID = require('mongodb').ObjectID;
 
 module.exports = function({db}) {
-  let storage = [];
-  let auto_increment = 0;
+  let collection = db.collection('users');
 
-  async function insert(o) {
-    storage.push({...o, id: auto_increment++});
+  async function insert({username, password="defpass"}) {
+    let response = await collection.insertOne({username, password});
+    return {count: response.insertedCount};
   }
 
-  async function remove({id}) {
-    for (let i = 0; i < storage.length; i++) {
-      if (storage[i].id == id) {
-        storage.splice(i);
-        return true;
-      }
-    }
-    false;
+  async function remove({_id}) {
+    let response = await collection.deleteOne({_id: new ObjectID(_id)});
+    return {count: response.result.n};
   }
 
-  async function get() {
-    return [...storage];
+  async function find({_id, ...other}) {
+    let query = {...other};
+    if (_id) Object.assign(query, {_id: new ObjectID(_id)});
+    return await collection.find(query).toArray();
   }
 
   return {
     insert,
     remove,
-    get,
+    find,
   };
 };
