@@ -13,7 +13,7 @@ module.exports = function({db}) {
     return {count: response.result.n};
   }
 
-  async function find({_id, ...other}) {
+  async function find({_id, ...other}={}) {
     let query = {...other};
     if (_id) Object.assign(query, {_id: new ObjectID(_id)});
     return await collection.find(query).toArray();
