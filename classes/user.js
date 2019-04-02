@@ -1,13 +1,13 @@
 
-module.exports = function() {
+module.exports = function({db}) {
   let storage = [];
   let auto_increment = 0;
 
-  function insert(o) {
+  async function insert(o) {
     storage.push({...o, id: auto_increment++});
   }
 
-  function remove({id}) {
+  async function remove({id}) {
     for (let i = 0; i < storage.length; i++) {
       if (storage[i].id == id) {
         storage.splice(i);
@@ -17,7 +17,7 @@ module.exports = function() {
     false;
   }
 
-  function get() {
+  async function get() {
     return [...storage];
   }
 

@@ -1,22 +1,22 @@
 let router = require('express').Router();
 
-module.exports = function(db) {
-  let model = db.models.user;
+module.exports = function({models}) {
+  let model = models.user;
 
-  router.get('/', (req, res, next) => {
-    res.send(model.get());
+  router.get('/', async (req, res, next) => {
+    res.send(await model.get());
   });
 
-  router.post('/', (req, res, next) => {
-    res.send(model.insert(req.body));
+  router.post('/', async (req, res, next) => {
+    res.send(await model.insert(req.body));
   });
 
-  router.put('/', (req, res, next) => {
+  router.put('/', async (req, res, next) => {
     res.send('user');
   });
 
-  router.delete('/', (req, res, next) => {
-    res.send(model.remove(req.query));
+  router.delete('/', async (req, res, next) => {
+    res.send(await model.remove(req.query));
   });
 
   return router;
